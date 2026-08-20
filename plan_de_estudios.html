@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan de Estudio & Evolución Profesional</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --card-border: #334155;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-blue: #38bdf8;
+            --accent-purple: #c084fc;
+            --accent-green: #4ade80;
+            --accent-amber: #fbbf24;
+            --accent-pink: #f472b6;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 1.5rem;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p.subtitle {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-top: 0.25rem;
+        }
+
+        /* Time Config Controls */
+        .time-config-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 1.25rem;
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .time-config-card h3 {
+            font-size: 1rem;
+            width: 100%;
+            color: var(--accent-blue);
+            margin-bottom: 0.25rem;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .input-group label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .input-group input {
+            background: var(--bg-color);
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
+            padding: 0.4rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+
+        .btn-save {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            margin-left: auto;
+        }
+
+        .btn-save:hover {
+            opacity: 0.9;
+        }
+
+        /* Schedule Grid */
+        .grid-schedule {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .day-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .day-card:hover {
+            transform: translateY(-4px);
+            border-color: #475569;
+        }
+
+        .day-header {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 1rem;
+            border-bottom: 1px solid var(--card-border);
+            text-align: center;
+        }
+
+        .day-header h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .day-body {
+            padding: 1rem;
+            display: flex;
+            flex-direction: flex-col;
+            gap: 1rem;
+            flex-grow: 1;
+        }
+
+        .slot-block {
+            background: rgba(15, 23, 42, 0.6);
+            border-left: 3px solid var(--card-border);
+            border-radius: 0 6px 6px 0;
+            padding: 0.75rem;
+        }
+
+        .slot-block.morning { border-left-color: var(--accent-amber); }
+        .slot-block.afternoon { border-left-color: var(--accent-blue); }
+
+        .time-badge {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+            display: block;
+        }
+
+        .slot-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .platform-tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-weight: 500;
+            margin-top: 0.4rem;
+        }
+
+        .tag-platzi { background: rgba(74, 222, 128, 0.15); color: var(--accent-green); }
+        .tag-udemy { background: rgba(244, 114, 182, 0.15); color: var(--accent-pink); }
+        .tag-project { background: rgba(192, 132, 252, 0.15); color: var(--accent-purple); }
+
+        .slot-desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.3;
+        }
+
+        /* Projects Section */
+        .projects-section {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .projects-section h2 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--accent-purple);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .project-card {
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid var(--card-border);
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .project-card h4 {
+            font-size: 0.95rem;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+        }
+
+        .project-card p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 1rem; }
+            .time-config-card { flex-direction: column; align-items: stretch; }
+            .btn-save { margin-left: 0; width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <h1>Plan de Estudio Semanal</h1>
+            <p class="subtitle">Evolución Profesional: Nube, DevOps e Inteligencia Artificial Aplicada</p>
+        </div>
+    </header>
+
+    <!-- Configuración de Horarios -->
+    <div class="time-config-card">
+        <h3>Personalizar Franjas Horarias</h3>
+        <div class="input-group">
+            <label>Bloque Mañana:</label>
+            <input type="time" id="m-start" value="07:00">
+            <label>a</label>
+            <input type="time" id="m-end" value="07:30">
+        </div>
+        <div class="input-group">
+            <label>Bloque Tarde:</label>
+            <input type="time" id="a-start" value="17:30">
+            <label>a</label>
+            <input type="time" id="a-end" value="19:00">
+        </div>
+        <button class="btn-save" onclick="updateScheduleTimes()">Actualizar Horarios</button>
+    </div>
+
+    <!-- Grid de Días -->
+    <div class="grid-schedule">
+        
+        <!-- Lunes -->
+        <div class="day-card">
+            <div class="day-header">
+                <h2>Lunes</h2>
+            </div>
+            <div class="day-body">
+                <div class="slot-block morning">
+                    <span class="time-badge morning-time">07:00 - 07:30</span>
+                    <div class="slot-title">Inglés Técnico</div>
+                    <div class="slot-desc">Comprensión auditiva y vocabulario TI.</div>
+                    <span class="platform-tag tag-platzi">Platzi</span>
+                </div>
+                <div class="slot-block afternoon">
+                    <span class="time-badge afternoon-time">17:30 - 19:00</span>
+                    <div class="slot-title">Nube (AWS / Azure)</div>
+                    <div class="slot-desc">Arquitectura, VPCs, laboratorios y certificación.</div>
+                    <span class="platform-tag tag-udemy">Udemy</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Martes -->
+        <div class="day-card">
+            <div class="day-header">
+                <h2>Martes</h2>
+            </div>
+            <div class="day-body">
+                <div class="slot-block morning">
+                    <span class="time-badge morning-time">07:00 - 07:30</span>
+                    <div class="slot-title">Habilidades Blandas</div>
+                    <div class="slot-desc">Comunicación asertiva para equipos técnicos.</div>
+                    <span class="platform-tag tag-platzi">Platzi</span>
+                </div>
+                <div class="slot-block afternoon">
+                    <span class="time-badge afternoon-time">17:30 - 19:00</span>
+                    <div class="slot-title">Automatización & Scripting</div>
+                    <div class="slot-desc">Python aplicado a la gestión de sistemas y logs.</div>
+                    <span class="platform-tag tag-udemy">Udemy / Platzi</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Miércoles -->
+        <div class="day-card">
+            <div class="day-header">
+                <h2>Miércoles</h2>
+            </div>
+            <div class="day-body">
+                <div class="slot-block morning">
+                    <span class="time-badge morning-time">07:00 - 07:30</span>
+                    <div class="slot-title">Inglés Técnico</div>
+                    <div class="slot-desc">Pronunciación y lectura de documentación.</div>
+                    <span class="platform-tag tag-platzi">Platzi</span>
+                </div>
+                <div class="slot-block afternoon">
+                    <span class="time-badge afternoon-time">17:30 - 19:00</span>
+                    <div class="slot-title">Contenedores (Docker)</div>
+                    <div class="slot-desc"> Dockerfile, volúmenes y docker-compose.</div>
+                    <span class="platform-tag tag-udemy">Udemy</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Jueves -->
+        <div class="day-card">
+            <div class="day-header">
+                <h2>Jueves</h2>
+            </div>
+            <div class="day-body">
+                <div class="slot-block morning">
+                    <span class="time-badge morning-time">07:00 - 07:30</span>
+                    <div class="slot-title">Productividad / IA</div>
+                    <div class="slot-desc">Prompt Engineering y optimización de tareas.</div>
+                    <span class="platform-tag tag-platzi">Platzi</span>
+                </div>
+                <div class="slot-block afternoon">
+                    <span class="time-badge afternoon-time">17:30 - 19:00</span>
+                    <div class="slot-title">Agentes de IA (AIOps)</div>
+                    <div class="slot-desc">Integración de LLMs y LangChain con Python.</div>
+                    <span class="platform-tag tag-udemy">Udemy / Platzi</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Viernes -->
+        <div class="day-card">
+            <div class="day-header">
+                <h2>Viernes</h2>
+            </div>
+            <div class="day-body">
+                <div class="slot-block morning">
+                    <span class="time-badge morning-time">07:00 - 07:30</span>
+                    <div class="slot-title">Inglés Técnico</div>
+                    <div class="slot-desc">Repaso semanal de vocabulario y notas.</div>
+                    <span class="platform-tag tag-platzi">Platzi</span>
+                </div>
+                <div class="slot-block afternoon">
+                    <span class="time-badge afternoon-time">17:30 - 19:00</span>
+                    <div class="slot-title">Proyecto Integrador</div>
+                    <div class="slot-desc">Desarrollo práctico sin clases en video.</div>
+                    <span class="platform-tag tag-project">Práctica Real</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Sección Proyectos -->
+    <div class="projects-section">
+        <h2>Proyecto Práctico Acumulativo (Viernes por la Tarde)</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <h4>Fase 1: Parser de Logs Inteligente</h4>
+                <p>Script en Python que lee logs del sistema, detecta errores críticos y envía el fragmento a un LLM para generar un diagnóstico automático.</p>
+            </div>
+            <div class="project-card">
+                <h4>Fase 2: Contenerización</h4>
+                <p>Empaquetado del script en Docker y orquestación con <code>docker-compose</code> adjuntando una base de datos PostgreSQL.</p>
+            </div>
+            <div class="project-card">
+                <h4>Fase 3: Despliegue en Nube (IaC)</h4>
+                <p>Despliegue de la infraestructura en AWS/Azure mediante scripts de Terraform con reglas de seguridad producción-ready.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function updateScheduleTimes() {
+        const mStart = document.getElementById('m-start').value;
+        const mEnd = document.getElementById('m-end').value;
+        const aStart = document.getElementById('a-start').value;
+        const aEnd = document.getElementById('a-end').value;
+
+        const morningText = `${mStart} - ${mEnd}`;
+        const afternoonText = `${aStart} - ${aEnd}`;
+
+        document.querySelectorAll('.morning-time').forEach(el => el.textContent = morningText);
+        document.querySelectorAll('.afternoon-time').forEach(el => el.textContent = afternoonText);
+
+        // Guardar preferencias en LocalStorage
+        localStorage.setItem('study_m_start', mStart);
+        localStorage.setItem('study_m_end', mEnd);
+        localStorage.setItem('study_a_start', aStart);
+        localStorage.setItem('study_a_end', aEnd);
+    }
+
+    function loadSavedTimes() {
+        const mStart = localStorage.getItem('study_m_start');
+        const mEnd = localStorage.getItem('study_m_end');
+        const aStart = localStorage.getItem('study_a_start');
+        const aEnd = localStorage.getItem('study_a_end');
+
+        if (mStart) document.getElementById('m-start').value = mStart;
+        if (mEnd) document.getElementById('m-end').value = mEnd;
+        if (aStart) document.getElementById('a-start').value = aStart;
+        if (aEnd) document.getElementById('a-end').value = aEnd;
+
+        updateScheduleTimes();
+    }
+
+    // Cargar al iniciar
+    window.onload = loadSavedTimes;
+</script>
+
+</body>
+</html>
