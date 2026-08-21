@@ -122,7 +122,7 @@
         /* Schedule Grid */
         .grid-schedule {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 1.25rem;
             margin-bottom: 2.5rem;
         }
@@ -155,35 +155,37 @@
         }
 
         .day-body {
-            padding: 1rem;
+            padding: 1.25rem;
             display: flex;
-            flex-direction: flex-col;
-            gap: 1rem;
+            flex-direction: column; /* FORZADO A VERTICAL */
+            gap: 1.25rem;
             flex-grow: 1;
         }
 
         .slot-block {
             background: rgba(15, 23, 42, 0.6);
-            border-left: 3px solid var(--card-border);
-            border-radius: 0 6px 6px 0;
-            padding: 0.75rem;
+            border-radius: 8px; /* Borde redondeado completo para mejor visual */
+            border: 1px solid var(--card-border); /* Borde sutil */
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
         }
 
-        .slot-block.morning { border-left-color: var(--accent-amber); }
-        .slot-block.afternoon { border-left-color: var(--accent-blue); }
+        .slot-block.morning { border-left: 3px solid var(--accent-amber); }
+        .slot-block.afternoon { border-left: 3px solid var(--accent-blue); }
 
         .time-badge {
             font-size: 0.75rem;
             font-weight: 600;
             color: var(--text-muted);
-            margin-bottom: 0.25rem;
             display: block;
         }
 
         .slot-title {
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             font-weight: 600;
-            margin-bottom: 0.25rem;
+            color: var(--text-main);
         }
 
         .platform-tag {
@@ -193,6 +195,7 @@
             border-radius: 4px;
             font-weight: 500;
             margin-top: 0.4rem;
+            align-self: flex-start; /* Evita que ocupe todo el ancho */
         }
 
         .tag-platzi { background: rgba(74, 222, 128, 0.15); color: var(--accent-green); }
@@ -200,9 +203,10 @@
         .tag-project { background: rgba(192, 132, 252, 0.15); color: var(--accent-purple); }
 
         .slot-desc {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             color: var(--text-muted);
-            line-height: 1.3;
+            line-height: 1.4;
+            flex-grow: 1;
         }
 
         /* Projects Section */
@@ -296,156 +300,4 @@
                 </div>
                 <div class="slot-block afternoon">
                     <span class="time-badge afternoon-time">17:30 - 19:00</span>
-                    <div class="slot-title">Nube (AWS / Azure)</div>
-                    <div class="slot-desc">Arquitectura, VPCs, laboratorios y certificación.</div>
-                    <span class="platform-tag tag-udemy">Udemy</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Martes -->
-        <div class="day-card">
-            <div class="day-header">
-                <h2>Martes</h2>
-            </div>
-            <div class="day-body">
-                <div class="slot-block morning">
-                    <span class="time-badge morning-time">07:00 - 07:30</span>
-                    <div class="slot-title">Habilidades Blandas</div>
-                    <div class="slot-desc">Comunicación asertiva para equipos técnicos.</div>
-                    <span class="platform-tag tag-platzi">Platzi</span>
-                </div>
-                <div class="slot-block afternoon">
-                    <span class="time-badge afternoon-time">17:30 - 19:00</span>
-                    <div class="slot-title">Automatización & Scripting</div>
-                    <div class="slot-desc">Python aplicado a la gestión de sistemas y logs.</div>
-                    <span class="platform-tag tag-udemy">Udemy / Platzi</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Miércoles -->
-        <div class="day-card">
-            <div class="day-header">
-                <h2>Miércoles</h2>
-            </div>
-            <div class="day-body">
-                <div class="slot-block morning">
-                    <span class="time-badge morning-time">07:00 - 07:30</span>
-                    <div class="slot-title">Inglés Técnico</div>
-                    <div class="slot-desc">Pronunciación y lectura de documentación.</div>
-                    <span class="platform-tag tag-platzi">Platzi</span>
-                </div>
-                <div class="slot-block afternoon">
-                    <span class="time-badge afternoon-time">17:30 - 19:00</span>
-                    <div class="slot-title">Contenedores (Docker)</div>
-                    <div class="slot-desc"> Dockerfile, volúmenes y docker-compose.</div>
-                    <span class="platform-tag tag-udemy">Udemy</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Jueves -->
-        <div class="day-card">
-            <div class="day-header">
-                <h2>Jueves</h2>
-            </div>
-            <div class="day-body">
-                <div class="slot-block morning">
-                    <span class="time-badge morning-time">07:00 - 07:30</span>
-                    <div class="slot-title">Productividad / IA</div>
-                    <div class="slot-desc">Prompt Engineering y optimización de tareas.</div>
-                    <span class="platform-tag tag-platzi">Platzi</span>
-                </div>
-                <div class="slot-block afternoon">
-                    <span class="time-badge afternoon-time">17:30 - 19:00</span>
-                    <div class="slot-title">Agentes de IA (AIOps)</div>
-                    <div class="slot-desc">Integración de LLMs y LangChain con Python.</div>
-                    <span class="platform-tag tag-udemy">Udemy / Platzi</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Viernes -->
-        <div class="day-card">
-            <div class="day-header">
-                <h2>Viernes</h2>
-            </div>
-            <div class="day-body">
-                <div class="slot-block morning">
-                    <span class="time-badge morning-time">07:00 - 07:30</span>
-                    <div class="slot-title">Inglés Técnico</div>
-                    <div class="slot-desc">Repaso semanal de vocabulario y notas.</div>
-                    <span class="platform-tag tag-platzi">Platzi</span>
-                </div>
-                <div class="slot-block afternoon">
-                    <span class="time-badge afternoon-time">17:30 - 19:00</span>
-                    <div class="slot-title">Proyecto Integrador</div>
-                    <div class="slot-desc">Desarrollo práctico sin clases en video.</div>
-                    <span class="platform-tag tag-project">Práctica Real</span>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- Sección Proyectos -->
-    <div class="projects-section">
-        <h2>Proyecto Práctico Acumulativo (Viernes por la Tarde)</h2>
-        <div class="projects-grid">
-            <div class="project-card">
-                <h4>Fase 1: Parser de Logs Inteligente</h4>
-                <p>Script en Python que lee logs del sistema, detecta errores críticos y envía el fragmento a un LLM para generar un diagnóstico automático.</p>
-            </div>
-            <div class="project-card">
-                <h4>Fase 2: Contenerización</h4>
-                <p>Empaquetado del script en Docker y orquestación con <code>docker-compose</code> adjuntando una base de datos PostgreSQL.</p>
-            </div>
-            <div class="project-card">
-                <h4>Fase 3: Despliegue en Nube (IaC)</h4>
-                <p>Despliegue de la infraestructura en AWS/Azure mediante scripts de Terraform con reglas de seguridad producción-ready.</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    function updateScheduleTimes() {
-        const mStart = document.getElementById('m-start').value;
-        const mEnd = document.getElementById('m-end').value;
-        const aStart = document.getElementById('a-start').value;
-        const aEnd = document.getElementById('a-end').value;
-
-        const morningText = `${mStart} - ${mEnd}`;
-        const afternoonText = `${aStart} - ${aEnd}`;
-
-        document.querySelectorAll('.morning-time').forEach(el => el.textContent = morningText);
-        document.querySelectorAll('.afternoon-time').forEach(el => el.textContent = afternoonText);
-
-        // Guardar preferencias en LocalStorage
-        localStorage.setItem('study_m_start', mStart);
-        localStorage.setItem('study_m_end', mEnd);
-        localStorage.setItem('study_a_start', aStart);
-        localStorage.setItem('study_a_end', aEnd);
-    }
-
-    function loadSavedTimes() {
-        const mStart = localStorage.getItem('study_m_start');
-        const mEnd = localStorage.getItem('study_m_end');
-        const aStart = localStorage.getItem('study_a_start');
-        const aEnd = localStorage.getItem('study_a_end');
-
-        if (mStart) document.getElementById('m-start').value = mStart;
-        if (mEnd) document.getElementById('m-end').value = mEnd;
-        if (aStart) document.getElementById('a-start').value = aStart;
-        if (aEnd) document.getElementById('a-end').value = aEnd;
-
-        updateScheduleTimes();
-    }
-
-    // Cargar al iniciar
-    window.onload = loadSavedTimes;
-</script>
-
-</body>
-</html>
+                    <div class="slot-title">Nube (AWS / Azure)
